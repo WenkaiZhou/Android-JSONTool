@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import com.kevin.jsontool.bean.NewsCenter;
-import com.kevin.jsontool.utils.JsonTool;
 import com.kevin.jsontool.utils.LocalFileUtils;
 /**
  * 版权所有：XXX有限公司</br>

@@ -1,4 +1,4 @@
-package com.kevin.jsontool.utils;
+package com.kevin.jsontool;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
