@@ -12,7 +12,7 @@ import java.util.List;
  *         注:如果您修改了本类请填写以下内容作为记录，如非本人操作劳烦通知，谢谢！！！</br>
  * @author mender，Modified Date Modify Content:
  */
-public class NewsCenter {
+public class TestBean1 {
 	public List<NewsItem> data;
 	public List<Integer> extend;
 	public int retcode;

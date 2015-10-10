@@ -153,8 +153,7 @@ public class JsonTool<T> {
 			} else {
 				try {
 					Object obj = job.get(name);
-					String className = type.getName();
-					Class<?> clazz = Class.forName(className);
+					Class<?> clazz = Class.forName(typeName);
 					if(obj instanceof JSONObject) {
 						Object parseJson = parseObject((JSONObject)obj, clazz, t);
 						field.set(t, parseJson);

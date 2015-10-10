@@ -1,0 +1,50 @@
+{
+    "rotateData": {
+        "items": [
+            {
+                "id": "0",
+                "descText": "传递数据纠结吗？",
+                "imgUrl": "http://cms.csdnimg.cn/article/201305/21/519b0d442e3e7.jpg",
+                "link":"这个在应用里判断是否有链接,为空无链接",
+                "type":"weather"
+            },
+            {
+                "id": "1",
+                "descText": "OOM了肿么办，不用怕！",
+                "imgUrl": "http://cms.csdnimg.cn/article/201305/03/51834d562e039_middle.jpg",
+                "link":"这个在应用里判断是否有链接,为空无链接",
+                "type":"ad"
+            },
+            {
+                "id": "2",
+                "descText": "不想写sql语句唉",
+                "imgUrl": "http://www.strongcms.net/uploads/allimg/c120202/132Q962920TP-1W17.png",
+                "link":"xxx",
+                "type":"ad"
+            }
+        ]
+    },
+    "functionItem":[
+        {
+            "id": "0",
+            "descText": "心情记事",
+            "imgUrl": "http://i3.tietuku.com/4e4c145f7dfce950.jpg",
+            "target": "com.kevin.moodinn.activity.NoteActivity"
+        },
+        {
+            "id": "2",
+            "descText": "每日美文",
+            "imgUrl": "http://www.zgmaimai.cn/uploads/allimg/c120813/1344RV05X950-13091.jpg",
+            "target": "com.kevin.moodinn.activity.LiteratureActivity"
+        },
+        {
+            "id": "1",
+            "descText": "天气知多少",
+            "imgUrl": "http://i3.tietuku.com/2be142ea200e5fd5.jpg",
+            "target": "com.kevin.moodinn.activity.WeatherActivity"
+        }
+    ],
+    "serverUrl": {
+        "updateInfo": "http://kevin-apps.oss-cn-beijing.aliyuncs.com/osandriod/update/versionInfo.json"
+    }
+}
