@@ -84,7 +84,8 @@ public class JsonTool<T> {
 			Class<?> type = field.getType();
 			String name = field.getName();
 			
-			if(type.getName().equalsIgnoreCase("java.lang.String")) {
+			String typeName = type.getName();
+			if(typeName.equalsIgnoreCase("java.lang.String")) {
 				try {
 					String value = job.getString(name);
 					if (value != null && value.equals("null")) {
@@ -101,36 +102,40 @@ public class JsonTool<T> {
 							e1.printStackTrace();
 					}
 				}
-			} else if(type.getName().equalsIgnoreCase("int")) {
+			} else if(typeName.equalsIgnoreCase("int") ||
+					type.getName().equalsIgnoreCase("java.lang.Integer")) {
 				try {
 					field.set(t, job.getInt(name));
 				} catch (Exception e) {
 					if(DEBUG)
 						e.printStackTrace();
 				}
-			} else if(type.getName().equalsIgnoreCase("boolean")) {
+			} else if(typeName.equalsIgnoreCase("boolean") ||
+					typeName.equalsIgnoreCase("java.lang.Boolean")) {
 				try {
 					field.set(t, job.getBoolean(name));
 				} catch (Exception e) {
 					if(DEBUG)
 						e.printStackTrace();
 				}
-			} else if(type.getName().equalsIgnoreCase("float")) {
+			} else if(typeName.equalsIgnoreCase("float") ||
+					typeName.equalsIgnoreCase("java.lang.Float")) {
 				try {
 					field.set(t, Float.valueOf(job.getString(name)));
 				} catch (Exception e) {
 					if(DEBUG)
 						e.printStackTrace();
 				}
-			} else if(type.getName().equalsIgnoreCase("double")) {
+			} else if(typeName.equalsIgnoreCase("double") || 
+					typeName.equalsIgnoreCase("java.lang.Double")) {
 				try {
 					field.set(t, job.getDouble(name));
 				} catch (Exception e) {
 					if(DEBUG)
 						e.printStackTrace();
 				}
-			} else if(type.getName().equalsIgnoreCase("java.util.List") ||
-					type.getName().equalsIgnoreCase("java.util.ArrayList")){
+			} else if(typeName.equalsIgnoreCase("java.util.List") ||
+					typeName.equalsIgnoreCase("java.util.ArrayList")){
 				try {
 					Object obj = job.get(name);
 					Type genericType = field.getGenericType();
