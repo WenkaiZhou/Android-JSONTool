@@ -26,9 +26,9 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		
 //		jsonTest1();
-//		jsonTest2();
+		jsonTest2();
 		
-		jsonTest3();
+//		jsonTest3();
 	}
 
 	private void jsonTest3() {

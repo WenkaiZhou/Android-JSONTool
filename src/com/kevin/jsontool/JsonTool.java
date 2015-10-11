@@ -237,6 +237,7 @@ public class JsonTool<T> {
 			field.setAccessible(true);
 			Class<?> type = field.getType();
 			String name = field.getName();
+			if(name.contains("this$")) continue;
 			
 			String typeName = type.getName();
 			if(typeName.equals("java.lang.String")) {
