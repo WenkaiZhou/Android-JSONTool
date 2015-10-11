@@ -27,6 +27,15 @@ public class JsonTool<T> {
 	
 	private static boolean DEBUG = false;
 	
+	/**
+	 * 将 对象编码为 JSON格式
+	 * 
+	 * @param t 待封装的对象
+	 * @return String: 封装后JSONObject String格式
+	 * @version 1.0 
+	 * @date 2015-10-11
+	 * @Author zhou.wenkai
+	 */
 	public static <T> String toJson(T t) {
 		if (t == null) {
             return "{}";  

@@ -1,12 +1,18 @@
 # Android-JSONTool
 
-JSON 到 Bean 封装简单封装
+## How to use ##
+
+JSON to Bean Example
 
 
 	String jsonStr = LocalFileUtils.getStringFormAsset(this, "test.json");
 	// 使用JSON 操作 工具将JSON字符串封装到实体类
 	YourBean newsCenter = JsonTool.toBean(jsonStr, YourBean.class);
 
+JSON to Bean Example
+
+	// 使用JSON 操作 工具将实体类封装到JSON字符串
+	String toJson = JsonTool.toJson(yourBean);
 
 ## License
 
