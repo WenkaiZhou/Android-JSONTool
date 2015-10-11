@@ -12,16 +12,10 @@ import java.util.List;
  *         注:如果您修改了本类请填写以下内容作为记录，如非本人操作劳烦通知，谢谢！！！</br>
  * @author mender，Modified Date Modify Content:
  */
-public class TestBean1 {
-	public String testStr;
-	public Integer testInt;
-	
+public class TestBean3 {
 	public List<NewsItem> data;
-	public List<Integer> extend;
-	public int retcode;
 
 	public class NewsItem {
-		public List<NewsCategory> children;
 		public int id;
 		public String title;
 		public int type;
@@ -30,13 +24,6 @@ public class TestBean1 {
 		public String dayurl;
 		public String excurl;
 		public String weekurl;
-		
-		public class NewsCategory {
-			public int id;
-			public String title;
-			public int type;
-			public String url;
-		}
 	}
 
 }

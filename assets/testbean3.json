@@ -1,0 +1,30 @@
+{
+    "data": [
+        {
+            "id": 10000,
+            "title": "新闻",
+            "type": 1
+        },
+        {
+            "id": 10002,
+            "title": "专题",
+            "type": 10,
+            "url": "/10006/list_1.json",
+            "url1": "/10007/list1_1.json"
+        },
+        {
+            "id": 10003,
+            "title": "组图",
+            "type": 2,
+            "url": "/10008/list_1.json"
+        },
+        {
+            "dayurl": "",
+            "excurl": "",
+            "id": 10004,
+            "title": "互动",
+            "type": 3,
+            "weekurl": ""
+        }
+    ]
+}

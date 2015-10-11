@@ -4,6 +4,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,6 +26,150 @@ import android.util.Log;
 public class JsonTool<T> {
 	
 	private static boolean DEBUG = false;
+	
+	public static <T> String toJson(T t) {
+		if (t == null) {
+            return "{}";  
+        }
+		return objectToJson(t);
+	}
+	
+	/**
+	 * 将 对象编码为 JSON格式
+	 * 
+	 * @param t 待封装的对象
+	 * @return String: 封装后JSONObject String格式
+	 * @version 1.0 
+	 * @date 2015-10-11
+	 * @Author zhou.wenkai
+	 */
+	private static <T> String objectToJson(T t) {
+		
+		Field[] fields = t.getClass().getDeclaredFields();
+		StringBuilder sb = new StringBuilder(fields.length << 4);
+		sb.append("{");
+		
+		for (Field field : fields) {
+			field.setAccessible(true);
+			Class<?> type = field.getType();
+			String name = field.getName();
+			if(name.contains("this$")) continue;
+			
+			String typeName = type.getName();
+			if(typeName.equals("java.lang.String")) {
+				try {
+					sb.append("\""+name+"\":");
+					sb.append(stringToJson((String)field.get(t)));
+					sb.append(",");
+				} catch (Exception e) {
+					if(DEBUG)
+						e.printStackTrace();
+				}
+			} else if(typeName.equals("boolean") ||
+					typeName.equals("java.lang.Boolean") ||
+					typeName.equals("int") ||
+					typeName.equals("java.lang.Integer") ||
+					typeName.equals("float") ||
+					typeName.equals("java.lang.Float") ||
+					typeName.equals("double") || 
+					typeName.equals("java.lang.Double")) {
+				try {
+					sb.append("\""+name+"\":");
+					sb.append(field.get(t));
+					sb.append(",");
+				} catch (Exception e) {
+					if(DEBUG)
+						e.printStackTrace();
+				}
+			} else if(typeName.equals("java.util.List") ||
+					typeName.equals("java.util.ArrayList")){
+				try {
+					List<?> objList = (List<?>) field.get(t);
+					if(objList.size() > 0) {
+						sb.append("\""+name+"\":");
+						sb.append("[");
+						String toJson = listToJson((List<?>) field.get(t));
+						sb.append(toJson);
+						sb.setCharAt(sb.length()-1, ']');
+						sb.append(",");
+					}
+				} catch (Exception e) {
+					if(DEBUG)
+						e.printStackTrace();
+				}
+			} else {
+				try {
+					sb.append("\""+name+"\":");
+					sb.append("{");
+					sb.append(objectToJson(field.get(t)));
+					sb.setCharAt(sb.length()-1, '}');
+					sb.append(",");
+				} catch (Exception e) {
+					if(DEBUG)
+						e.printStackTrace();
+				}
+			}
+			
+		}
+		if(sb.length() == 1) {
+			sb.append("}");
+		}
+		sb.setCharAt(sb.length()-1, '}');
+	    return sb.toString();  
+	}
+	
+	/**
+	 * 将 List 对象编码为 JSON格式
+	 * 
+	 * @param objList 待封装的对象集合
+	 * @return String:封装后JSONArray String格式
+	 * @version 1.0 
+	 * @date 2015-10-11
+	 * @Author zhou.wenkai
+	 */
+	private static<T> String listToJson(List<T> objList) {
+		final StringBuilder sb = new StringBuilder();
+		for (T t : objList) {
+			if(t instanceof String) {
+				sb.append(stringToJson((String) t));
+				sb.append(",");
+			} else if(t instanceof Boolean || 
+					t instanceof Integer ||
+					t instanceof Float ||
+					t instanceof Double) {
+				sb.append(t);
+				sb.append(",");
+			} else {
+				sb.append(objectToJson(t));
+				sb.append(",");
+			}
+		}
+		return sb.toString();
+	}
+
+	/**
+	 * 将 String 对象编码为 JSON格式，只需处理好特殊字符
+	 * 
+	 * @param s String 对象
+	 * @return String:JSON格式 
+	 * @version 1.0 
+	 * @date 2015-10-11
+	 * @Author zhou.wenkai
+	 */
+	private static String stringToJson(final String s) {
+		final StringBuilder sb = new StringBuilder(s.length() + 2 << 4);
+		sb.append('\"');
+		for (int i = 0; i < s.length(); i++) {
+			final char c = s.charAt(i);
+
+			sb.append(c == '\"' ? "\\\"" : c == '\\' ? "\\\\"
+					: c == '/' ? "\\/" : c == '\b' ? "\\b" : c == '\f' ? "\\f"
+							: c == '\n' ? "\\n" : c == '\r' ? "\\r"
+									: c == '\t' ? "\\t" : c);
+		}
+		sb.append('\"');
+		return sb.toString();
+	}
 	
 	/**
 	 * 将JSON字符串封装到对象
@@ -85,7 +230,7 @@ public class JsonTool<T> {
 			String name = field.getName();
 			
 			String typeName = type.getName();
-			if(typeName.equalsIgnoreCase("java.lang.String")) {
+			if(typeName.equals("java.lang.String")) {
 				try {
 					String value = job.getString(name);
 					if (value != null && value.equals("null")) {
@@ -102,40 +247,40 @@ public class JsonTool<T> {
 							e1.printStackTrace();
 					}
 				}
-			} else if(typeName.equalsIgnoreCase("int") ||
-					type.getName().equalsIgnoreCase("java.lang.Integer")) {
+			} else if(typeName.equals("int") ||
+					typeName.equals("java.lang.Integer")) {
 				try {
 					field.set(t, job.getInt(name));
 				} catch (Exception e) {
 					if(DEBUG)
 						e.printStackTrace();
 				}
-			} else if(typeName.equalsIgnoreCase("boolean") ||
-					typeName.equalsIgnoreCase("java.lang.Boolean")) {
+			} else if(typeName.equals("boolean") ||
+					typeName.equals("java.lang.Boolean")) {
 				try {
 					field.set(t, job.getBoolean(name));
 				} catch (Exception e) {
 					if(DEBUG)
 						e.printStackTrace();
 				}
-			} else if(typeName.equalsIgnoreCase("float") ||
-					typeName.equalsIgnoreCase("java.lang.Float")) {
+			} else if(typeName.equals("float") ||
+					typeName.equals("java.lang.Float")) {
 				try {
 					field.set(t, Float.valueOf(job.getString(name)));
 				} catch (Exception e) {
 					if(DEBUG)
 						e.printStackTrace();
 				}
-			} else if(typeName.equalsIgnoreCase("double") || 
-					typeName.equalsIgnoreCase("java.lang.Double")) {
+			} else if(typeName.equals("double") || 
+					typeName.equals("java.lang.Double")) {
 				try {
 					field.set(t, job.getDouble(name));
 				} catch (Exception e) {
 					if(DEBUG)
 						e.printStackTrace();
 				}
-			} else if(typeName.equalsIgnoreCase("java.util.List") ||
-					typeName.equalsIgnoreCase("java.util.ArrayList")){
+			} else if(typeName.equals("java.util.List") ||
+					typeName.equals("java.util.ArrayList")){
 				try {
 					Object obj = job.get(name);
 					Type genericType = field.getGenericType();

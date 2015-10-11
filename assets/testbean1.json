@@ -1,4 +1,6 @@
 {
+	"testStr":"这是String的测试",
+	"testInt":12443,
     "data": [
         {
             "children": [
