@@ -33,11 +33,12 @@
 
 	long beginTime3 = System.currentTimeMillis();
     // 使用Gson 操作 工具将JSON字符串封装到实体类
-    TestBean1 _testBean1 = new Gson().fromJson(json, TestBean1.class);
+	Gson gson = new Gson();
+    TestBean1 _testBean1 = gson.fromJson(json, TestBean1.class);
 	System.out.println("Gson JSON to Bean:"+(System.currentTimeMillis() - beginTime3));
 	long beginTime4 = System.currentTimeMillis();
 	// 使用Gson 操作 工具将实体类封装到JSON字符串
-	new Gson().toJson(_testBean1);
+	gson.toJson(_testBean1);
 	System.out.println("Gson Bean to JSON:"+(System.currentTimeMillis() - beginTime4));
 
 
@@ -50,11 +51,10 @@
 
 - Haier S1001LS pad 得到的数据
 
-		10-12 13:40:54.469: I/System.out(15701): JsonTool JSON to Bean:5
-		10-12 13:40:54.469: I/System.out(15701): JsonTool Bean to JSON:4
-		10-12 13:40:54.479: I/System.out(15701): Gson JSON to Bean:10
-		10-12 13:40:54.499: I/System.out(15701): Gson Bean to JSON:16
-
+		10-12 13:48:53.179: I/System.out(16611): JsonTool JSON to Bean:4
+		10-12 13:48:53.189: I/System.out(16611): JsonTool Bean to JSON:3
+		10-12 13:48:53.199: I/System.out(16611): Gson JSON to Bean:15
+		10-12 13:48:53.209: I/System.out(16611): Gson Bean to JSON:6
 
 - OPPO 1107 得到的数据
 		
@@ -69,8 +69,8 @@
 	- JSON to Bean Gson用时是JsonTool的**2.50**倍；
 	- Bean to JSON Gson用时是JsonTool的**2.57**倍；
 - Haier S1001LS
-	- JSON to Bean Gson用时是JsonTool的**2.00**倍；
-	- Bean to JSON Gson用时是JsonTool的**4.00**倍；
+	- JSON to Bean Gson用时是JsonTool的**3.75**倍；
+	- Bean to JSON Gson用时是JsonTool的**2.00**倍；
 - OPPO 1107
 	- JSON to Bean Gson用时是JsonTool的**3.50**倍；
 	- Bean to JSON Gson用时是JsonTool的**2.14**倍；
