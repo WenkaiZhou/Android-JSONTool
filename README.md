@@ -16,52 +16,66 @@
 
 ## 效率分析 ##
 
-以实例中的数据`testbean1.json`为例进行**1000**次操作得到时间：
+以实例中的数据`testbean1.json`为例进行Json to Bean操作得到时间：
 
 **测试代码**
 
 	String json = LocalFileUtils.getStringFormAsset(this, "testbean1.json");
 	
 	long beginTime1 = System.currentTimeMillis();
-	for (int i = 0; i < 10000; i++) {
-		// 使用JSONTool 操作 工具将JSON字符串封装到实体类
-		JsonTool.toBean(json, TestBean1.class);
-	}
-	System.out.println("JsonTool:"+(System.currentTimeMillis() - beginTime1));
-	
+    // 使用JSONTool 操作 工具将JSON字符串封装到实体类
+    TestBean1 testBean1 = JsonTool.toBean(json, TestBean1.class);
+	System.out.println("JsonTool JSON to Bean:"+(System.currentTimeMillis() - beginTime1));
 	long beginTime2 = System.currentTimeMillis();
-	for (int i = 0; i < 10000; i++) {
-		// 使用Gson 操作 工具将JSON字符串封装到实体类
-		Gson gson = new Gson();
-		gson.fromJson(json, TestBean1.class);
-	}
-	System.out.println("Gson:"+(System.currentTimeMillis() - beginTime2));
+	// 使用JSONTool 操作 工具将实体类封装到JSON字符串
+	JsonTool.toJson(testBean1);
+	System.out.println("JsonTool Bean to JSON:"+(System.currentTimeMillis() - beginTime2));
 
-
+	long beginTime3 = System.currentTimeMillis();
+    // 使用Gson 操作 工具将JSON字符串封装到实体类
+    TestBean1 _testBean1 = new Gson().fromJson(json, TestBean1.class);
+	System.out.println("Gson JSON to Bean:"+(System.currentTimeMillis() - beginTime3));
+	long beginTime4 = System.currentTimeMillis();
+	// 使用Gson 操作 工具将实体类封装到JSON字符串
+	new Gson().toJson(_testBean1);
+	System.out.println("Gson Bean to JSON:"+(System.currentTimeMillis() - beginTime4));
 
 
 - MI3 得到的数据
 
-		10-12 10:07:32.270: I/System.out(8509): JsonTool:6208
-		10-12 10:07:41.958: I/System.out(8509): Gson:9687
+		10-12 13:43:34.079: I/System.out(17361): JsonTool JSON to Bean:8
+		10-12 13:43:34.085: I/System.out(17361): JsonTool Bean to JSON:7
+		10-12 13:43:34.106: I/System.out(17361): Gson JSON to Bean:20
+		10-12 13:43:34.123: I/System.out(17361): Gson Bean to JSON:18
 
 - Haier S1001LS pad 得到的数据
 
-		10-12 10:06:38.080: I/System.out(6360): JsonTool:2607
-		10-12 10:06:42.890: I/System.out(6360): Gson:4811
+		10-12 13:40:54.469: I/System.out(15701): JsonTool JSON to Bean:5
+		10-12 13:40:54.469: I/System.out(15701): JsonTool Bean to JSON:4
+		10-12 13:40:54.479: I/System.out(15701): Gson JSON to Bean:10
+		10-12 13:40:54.499: I/System.out(15701): Gson Bean to JSON:16
+
 
 - OPPO 1107 得到的数据
 		
-		10-12 10:09:51.474: I/System.out(23315): JsonTool:3529
-		10-12 10:09:59.254: I/System.out(23315): Gson:7774
+		10-12 13:38:35.346: I/System.out(3894): JsonTool JSON to Bean:8
+		10-12 13:38:35.356: I/System.out(3894): JsonTool Bean to JSON:7
+		10-12 13:38:35.376: I/System.out(3894): Gson JSON to Bean:28
+		10-12 13:38:35.396: I/System.out(3894): Gson Bean to JSON:15
 
 可以看出：
 
-- MI3 Gson用时是JsonTool的**1.56**倍；
-- Haier S1001LS Gson用时是JsonTool的**1.84**倍；
-- OPPO 1107 Gson用时是JsonTool的**2.20**倍；
+- MI3
+	- JSON to Bean Gson用时是JsonTool的**2.50**倍；
+	- Bean to JSON Gson用时是JsonTool的**2.57**倍；
+- Haier S1001LS
+	- JSON to Bean Gson用时是JsonTool的**2.00**倍；
+	- Bean to JSON Gson用时是JsonTool的**4.00**倍；
+- OPPO 1107
+	- JSON to Bean Gson用时是JsonTool的**3.50**倍；
+	- Bean to JSON Gson用时是JsonTool的**2.14**倍；
 
-**JsonTool效率大约是Gson的2倍**
+**JsonTool效率是Gson的2.5倍以上**
 
 
 ## License

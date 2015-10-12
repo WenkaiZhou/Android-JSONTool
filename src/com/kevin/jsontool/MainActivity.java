@@ -25,6 +25,8 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
+		String json = LocalFileUtils.getStringFormAsset(this, "testbean1.json");
+		
 		jsonTest1();
 //		jsonTest2();
 		
