@@ -100,7 +100,9 @@ public class JsonTool<T> {
 			field.setAccessible(true);
 			Class<?> type = field.getType();
 			String name = field.getName();
-			if(name.contains("this$")) continue;
+			
+			// if the object don`t has a mapping for name, then continue
+			if(!job.has(name)) continue;
 			
 			String typeName = type.getName();
 			if(typeName.equals("java.lang.String")) {
@@ -236,6 +238,8 @@ public class JsonTool<T> {
 			field.setAccessible(true);
 			Class<?> type = field.getType();
 			String name = field.getName();
+			
+			// 'this$Number' 是内部类的外部类引用(指针)字段
 			if(name.contains("this$")) continue;
 			
 			String typeName = type.getName();
@@ -268,7 +272,7 @@ public class JsonTool<T> {
 					typeName.equals("java.util.ArrayList")){
 				try {
 					List<?> objList = (List<?>) field.get(t);
-					if(objList.size() > 0) {
+					if(null != objList && objList.size() > 0) {
 						sb.append("\""+name+"\":");
 						sb.append("[");
 						String toJson = listToJson((List<?>) field.get(t));
@@ -339,11 +343,14 @@ public class JsonTool<T> {
 	 * @date 2015-10-11
 	 * @Author zhou.wenkai
 	 */
-	private static String stringToJson(final String s) {
-		final StringBuilder sb = new StringBuilder(s.length() + 2 << 4);
+	private static String stringToJson(final String str) {
+		if(str == null || str.length() == 0) {
+			return "\"\"";
+		}
+		final StringBuilder sb = new StringBuilder(str.length() + 2 << 4);
 		sb.append('\"');
-		for (int i = 0; i < s.length(); i++) {
-			final char c = s.charAt(i);
+		for (int i = 0; i < str.length(); i++) {
+			final char c = str.charAt(i);
 
 			sb.append(c == '\"' ? "\\\"" : c == '\\' ? "\\\\"
 					: c == '/' ? "\\/" : c == '\b' ? "\\b" : c == '\f' ? "\\f"

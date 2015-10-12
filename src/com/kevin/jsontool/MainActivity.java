@@ -25,32 +25,10 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-//		jsonTest1();
+		jsonTest1();
 		jsonTest2();
 		
-//		jsonTest3();
-	}
-
-	private void jsonTest3() {
-		String json = LocalFileUtils.getStringFormAsset(this, "testbean3.json");
-		// 使用JSON 操作 工具将JSON字符串封装到实体类
-		TestBean3 toBean = JsonTool.toBean(json, TestBean3.class);
-		System.out.println(toBean);
-		
-		String toJson = JsonTool.toJson(toBean);
-		System.out.println(toJson);
-		toBean = JsonTool.toBean(toJson, TestBean3.class);
-		System.out.println(toBean);
-	}
-
-	private void jsonTest2() {
-		String json = LocalFileUtils.getStringFormAsset(this, "testbean2.json");
-		// 使用JSON 操作 工具将JSON字符串封装到实体类
-		TestBean2 toBean = JsonTool.toBean(json, TestBean2.class);
-		System.out.println(toBean);
-		
-		String toJson = JsonTool.toJson(toBean);
-		System.out.println(toJson);
+		jsonTest3();
 	}
 
 	private void jsonTest1() {
@@ -61,6 +39,28 @@ public class MainActivity extends Activity {
 		
 		String toJson = JsonTool.toJson(toBean);
 		System.out.println(toJson);
+	}
+	
+	private void jsonTest2() {
+		String json = LocalFileUtils.getStringFormAsset(this, "testbean2.json");
+		// 使用JSON 操作 工具将JSON字符串封装到实体类
+		TestBean2 toBean = JsonTool.toBean(json, TestBean2.class);
+		System.out.println(toBean);
+		
+		String toJson = JsonTool.toJson(toBean);
+		System.out.println(toJson);
+	}
+	
+	private void jsonTest3() {
+		String json = LocalFileUtils.getStringFormAsset(this, "testbean3.json");
+		// 使用JSON 操作 工具将JSON字符串封装到实体类
+		TestBean3 toBean = JsonTool.toBean(json, TestBean3.class);
+		System.out.println(toBean);
+		
+		String toJson = JsonTool.toJson(toBean);
+		System.out.println(toJson);
+		toBean = JsonTool.toBean(toJson, TestBean3.class);
+		System.out.println(toBean);
 	}
 
 }
