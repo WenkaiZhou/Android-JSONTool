@@ -4,6 +4,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -61,6 +62,72 @@ public class JsonTool<T> {
             return "{}";  
         }
 		return objectToJson(t);
+	}
+	
+	/**
+	 * 由JSON字符串生成Bean对象
+	 *  
+	 * @param jsonStr
+	 * @return String:
+	 * @version 1.0 
+	 * @date 2015-10-16
+	 * @Author zhou.wenkai
+	 */
+	public String createBean(String jsonStr) {
+		try {
+			JSONObject job = new JSONObject(jsonStr);
+			return createObject(job, 0);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return "";
+	}
+	
+	/**
+	 * 由JSONObject生成Bean对象
+	 * 
+	 * @param job
+	 * @param outerCount 外部类个数
+	 * @return
+	 * @return String:
+	 * @version 1.0 
+	 * @date 2015-10-16
+	 * @Author zhou.wenkai
+	 */
+	private String createObject(JSONObject job, int outerCount) {
+		// 该类的内部类个数
+		int innerCount = 0;
+		String inSuf = "";
+		for(int i = 0; i < innerCount; i++) {
+			inSuf+="0";
+		}
+		
+		StringBuilder sb = new StringBuilder();
+		if(outerCount == 0) {
+			sb.append("Bean");
+		} else {
+			
+		}
+		
+		sb.append(outerCount == 0 ? "Bean" : "Inner" + outerCount);
+		Iterator it = job.keys();
+		while (it.hasNext()) {
+            String key = (String) it.next();
+        }  
+		return null;
+	}
+	
+	/**
+	 * 由JSONArray生成List<Bean>集合
+	 * 
+	 * @param array 待转换的JSONArray
+	 * @return String:生成的List<Bean> toString()形式
+	 * @version 1.0 
+	 * @date 2015-10-16
+	 * @Author zhou.wenkai
+	 */
+	private String createArray(JSONArray array) {
+		return null;
 	}
 	
 	/**
