@@ -2,10 +2,13 @@
 
 ## How to use ##
 
+**JSON createBean Example**
+
+	// 使用JSON 操作 工具由JSON字符串封生成实体类
+	String beanStr = JsonTool.createBean(json, "TestBean");
+
 **JSON to Bean Example**
 
-
-	String jsonStr = LocalFileUtils.getStringFormAsset(this, "test.json");
 	// 使用JSON 操作 工具将JSON字符串封装到实体类
 	YourBean newsCenter = JsonTool.toBean(jsonStr, YourBean.class);
 
