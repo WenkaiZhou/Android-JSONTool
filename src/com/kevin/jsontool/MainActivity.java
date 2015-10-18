@@ -27,13 +27,35 @@ public class MainActivity extends Activity {
 		
 		String json = LocalFileUtils.getStringFormAsset(this, "testbean1.json");
 		
-		jsonTest1();
-//		jsonTest2();
+//		jsonParseTest1();
+//		jsonParseTest2();
 		
-//		jsonTest3();
+//		jsonParseTest3();
+		
+//		createBeanTest1();
+		createBeanTest2();
+//		createBeanTest3();
 	}
 
-	private void jsonTest1() {
+	private void createBeanTest1() {
+		String json = LocalFileUtils.getStringFormAsset(this, "testbean1.json");
+		String createBean = JsonTool.createBean(json, "TestBean1");
+		System.out.println(createBean);
+	}
+	
+	private void createBeanTest2() {
+		String json = LocalFileUtils.getStringFormAsset(this, "testbean2.json");
+		String createBean = JsonTool.createBean(json, "TestBean2");
+		System.out.println(createBean);
+	}
+	
+	private void createBeanTest3() {
+		String json = LocalFileUtils.getStringFormAsset(this, "testbean3.json");
+		String createBean = JsonTool.createBean(json, "TestBean3");
+		System.out.println(createBean);
+	}
+
+	private void jsonParseTest1() {
 		String json = LocalFileUtils.getStringFormAsset(this, "testbean1.json");
 		// 使用JSON 操作 工具将JSON字符串封装到实体类
 		TestBean1 toBean = JsonTool.toBean(json, TestBean1.class);
@@ -43,7 +65,7 @@ public class MainActivity extends Activity {
 		System.out.println(toJson);
 	}
 	
-	private void jsonTest2() {
+	private void jsonParseTest2() {
 		String json = LocalFileUtils.getStringFormAsset(this, "testbean2.json");
 		// 使用JSON 操作 工具将JSON字符串封装到实体类
 		TestBean2 toBean = JsonTool.toBean(json, TestBean2.class);
@@ -53,7 +75,7 @@ public class MainActivity extends Activity {
 		System.out.println(toJson);
 	}
 	
-	private void jsonTest3() {
+	private void jsonParseTest3() {
 		String json = LocalFileUtils.getStringFormAsset(this, "testbean3.json");
 		// 使用JSON 操作 工具将JSON字符串封装到实体类
 		TestBean3 toBean = JsonTool.toBean(json, TestBean3.class);

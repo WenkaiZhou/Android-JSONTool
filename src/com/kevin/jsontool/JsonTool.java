@@ -68,68 +68,22 @@ public class JsonTool<T> {
 	 * 由JSON字符串生成Bean对象
 	 *  
 	 * @param jsonStr
+	 * @param className 待生成Bean对象的名称
 	 * @return String:
 	 * @version 1.0 
 	 * @date 2015-10-16
 	 * @Author zhou.wenkai
 	 */
-	public String createBean(String jsonStr) {
+	public static String createBean(String jsonStr, String className) {
 		try {
 			JSONObject job = new JSONObject(jsonStr);
-			return createObject(job, 0);
+			return createObject(job, className, 0);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 		return "";
 	}
-	
-	/**
-	 * 由JSONObject生成Bean对象
-	 * 
-	 * @param job
-	 * @param outerCount 外部类个数
-	 * @return
-	 * @return String:
-	 * @version 1.0 
-	 * @date 2015-10-16
-	 * @Author zhou.wenkai
-	 */
-	private String createObject(JSONObject job, int outerCount) {
-		// 该类的内部类个数
-		int innerCount = 0;
-		String inSuf = "";
-		for(int i = 0; i < innerCount; i++) {
-			inSuf+="0";
-		}
-		
-		StringBuilder sb = new StringBuilder();
-		if(outerCount == 0) {
-			sb.append("Bean");
-		} else {
-			
-		}
-		
-		sb.append(outerCount == 0 ? "Bean" : "Inner" + outerCount);
-		Iterator it = job.keys();
-		while (it.hasNext()) {
-            String key = (String) it.next();
-        }  
-		return null;
-	}
-	
-	/**
-	 * 由JSONArray生成List<Bean>集合
-	 * 
-	 * @param array 待转换的JSONArray
-	 * @return String:生成的List<Bean> toString()形式
-	 * @version 1.0 
-	 * @date 2015-10-16
-	 * @Author zhou.wenkai
-	 */
-	private String createArray(JSONArray array) {
-		return null;
-	}
-	
+
 	/**
 	 * JSONObject 封装到 对象实例
 	 * 
@@ -428,4 +382,81 @@ public class JsonTool<T> {
 		return sb.toString();
 	}
 
+	/**
+	 * 由JSONObject生成Bean对象
+	 * 
+	 * @param job
+	 * @param className 待生成Bean对象的名称
+	 * @param outCount 外部类的个数
+	 * @return LinkedList<String>: 生成的Bean对象
+	 * @version 1.0
+	 * @date 2015-10-16
+	 * @Author zhou.wenkai
+	 */
+	private static String createObject(JSONObject job, String className, int outCount) {
+		final StringBuilder sb = new StringBuilder();
+		String separator = System.getProperty("line.separator");
+		
+		// 生成的Bean类前部的缩进空间
+		String classFrontSpace = "";
+		// 生成的Bean类字段前部的缩进空间
+		String fieldFrontSpace = "    ";
+		for (int i = 0; i < outCount; i++) {
+			classFrontSpace += "    ";
+			fieldFrontSpace += "    ";
+		}
+		
+		sb.append(classFrontSpace + "public class " + className + " {");
+		
+		Iterator<?> it = job.keys();
+		while (it.hasNext()) {
+            String key = (String) it.next();
+            try {
+				Object obj = job.get(key);
+				if(obj instanceof JSONArray) {
+					// 判断类是否为基本数据类型,如果为自定义类则字段类型取将key的首字母大写作为内部类名称
+					String fieldType = ((JSONArray)obj).get(0) instanceof JSONObject ?
+							"" : ((JSONArray)obj).get(0).getClass().getSimpleName();
+					if(fieldType == "") {
+						fieldType = String.valueOf(Character.isUpperCase(key.charAt(0)) ? 
+								key.charAt(0) : Character.toUpperCase(key.charAt(0))) + key.substring(1);
+					}
+					sb.append(separator);
+					sb.append(fieldFrontSpace + "public List<" + fieldType + "> " + key + ";");
+					
+					// 如果字段类型为自定义类类型,则取JSONArray中第一个JSONObject生成Bean
+					if(((JSONArray)obj).get(0) instanceof JSONObject) {
+						sb.append(separator);
+						sb.append(separator);
+						sb.append(fieldFrontSpace + "/** "+ fieldType +" is the inner class of "+ className +" */");
+						sb.append(separator);
+						sb.append(createObject((JSONObject)((JSONArray)obj).get(0), fieldType, outCount+1));
+					}
+				} else if(obj instanceof JSONObject) {
+					String fieldType = String.valueOf(Character.isUpperCase(key.charAt(0)) ? 
+							key.charAt(0) : Character.toUpperCase(key.charAt(0))) + key.substring(1);
+					sb.append(separator);
+					sb.append(fieldFrontSpace + "public List<" + fieldType + "> " + key + ";");
+					sb.append(separator);
+					sb.append(separator);
+					sb.append(fieldFrontSpace + "/** "+ fieldType +" is the inner class of "+ className +" */");
+					sb.append(separator);
+					sb.append(createObject((JSONObject)obj, fieldType, outCount+1));
+				} else {
+					String type = obj.getClass().getSimpleName();
+					sb.append(separator);
+					sb.append(fieldFrontSpace + "public " + type + " " + key + ";");
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+        }
+		
+		sb.append(separator);
+		sb.append(classFrontSpace + "}");
+		sb.append(separator);
+		
+		return sb.toString();
+	}
+	
 }

@@ -49,7 +49,15 @@ public class TestBean2 {
     	}
 
     }
-	
+    
+    public List<FunctionItem> functionItem;
+    	public class FunctionItem {
+    	public String id;
+    	public String descText;
+    	public String imgUrl;
+    	public String target;
+    }
+
     /** 服务地址 */
     public ServerUrl serverUrl;
 
