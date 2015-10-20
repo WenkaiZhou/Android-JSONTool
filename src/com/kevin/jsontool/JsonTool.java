@@ -1,4 +1,4 @@
-package com.kevin.jsontool;
+package com.kevin.loopview.utils;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -32,7 +32,7 @@ public class JsonTool<T> {
 	 * 将JSON字符串封装到对象
 	 * 
 	 * @param jsonStr 待封装的JSON字符串
-	 * @param c 待封装的实例字节码
+	 * @param clazz 待封装的实例字节码
 	 * @return T: 封装JSON数据的对象
 	 * @version 1.0 
 	 * @date 2015-10-9
@@ -358,7 +358,7 @@ public class JsonTool<T> {
 	/**
 	 * 将 String 对象编码为 JSON格式，只需处理好特殊字符
 	 * 
-	 * @param s String 对象
+	 * @param str String 对象
 	 * @return String:JSON格式 
 	 * @version 1.0 
 	 * @date 2015-10-11
