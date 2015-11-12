@@ -24,7 +24,7 @@ import android.util.Log;
  *         注:如果您修改了本类请填写以下内容作为记录，如非本人操作劳烦通知，谢谢！！！</br>
  * @author mender，Modified Date Modify Content:
  */
-public class JsonTool<T> {
+public class JsonTool {
 	
 	private static boolean DEBUG = false;
 	
@@ -175,6 +175,14 @@ public class JsonTool<T> {
 					if(DEBUG)
 						e.printStackTrace();
 				}
+			} else if(typeName.equals("long") || 
+					typeName.equals("java.lang.Long")) {
+				try {
+					field.set(t, job.getLong(name));
+				} catch (Exception e) {
+					if(DEBUG)
+						e.printStackTrace();
+				}
 			} else if(typeName.equals("java.util.List") ||
 					typeName.equals("java.util.ArrayList")){
 				try {
@@ -280,7 +288,9 @@ public class JsonTool<T> {
 					typeName.equals("float") ||
 					typeName.equals("java.lang.Float") ||
 					typeName.equals("double") || 
-					typeName.equals("java.lang.Double")) {
+					typeName.equals("java.lang.Double") ||
+					typeName.equals("long") || 
+					typeName.equals("java.lang.Long")) {
 				try {
 					sb.append("\""+name+"\":");
 					sb.append(field.get(t));
@@ -323,7 +333,7 @@ public class JsonTool<T> {
 			sb.append("}");
 		}
 		sb.setCharAt(sb.length()-1, '}');
-	    return sb.toString();  
+	    return sb.toString();
 	}
 	
 	/**
