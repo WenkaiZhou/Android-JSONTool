@@ -7,6 +7,6 @@
 /build
 /captures
 /.idea
-/library/local.properties
-/library/build
+/jsontool/local.properties
+/jsontool/build
 /sample/build
