@@ -14,14 +14,14 @@ import org.json.JSONObject;
 import android.util.Log;
 
 /**
- * 版权所有：XXX有限公司</br>
+ * 版权所有：XXX有限公司
  * 
- * JsonTool </br>
+ * JsonTool
  * 
- * @author zhou.wenkai ,Created on 2015-10-8 09:04:23</br> 
- * 		   Major Function：<b>JSON 操作 工具类</b> </br>
+ * @author zhou.wenkai ,Created on 2015-10-8 09:04:23
+ * 		   Major Function：<b>JSON 操作 工具类</b>
  * 
- *         注:如果您修改了本类请填写以下内容作为记录，如非本人操作劳烦通知，谢谢！！！</br>
+ *         注:如果您修改了本类请填写以下内容作为记录，如非本人操作劳烦通知，谢谢！！！
  * @author mender，Modified Date Modify Content:
  */
 public class JsonTool {
@@ -34,9 +34,7 @@ public class JsonTool {
 	 * @param jsonStr 待封装的JSON字符串
 	 * @param clazz 待封装的实例字节码
 	 * @return T: 封装JSON数据的对象
-	 * @version 1.0 
-	 * @date 2015-10-9
-	 * @Author zhou.wenkai
+	 * @version 1.0
 	 */
 	public static <T> T toBean(String jsonStr, Class<T> clazz) {
 		try {
@@ -53,9 +51,7 @@ public class JsonTool {
 	 * 
 	 * @param t 待封装的对象
 	 * @return String: 封装后JSONObject String格式
-	 * @version 1.0 
-	 * @date 2015-10-11
-	 * @Author zhou.wenkai
+	 * @version 1.0
 	 */
 	public static <T> String toJson(T t) {
 		if (t == null) {
@@ -70,9 +66,7 @@ public class JsonTool {
 	 * @param jsonStr
 	 * @param className 待生成Bean对象的名称
 	 * @return String:
-	 * @version 1.0 
-	 * @date 2015-10-16
-	 * @Author zhou.wenkai
+	 * @version 1.0
 	 */
 	public static String createBean(String jsonStr, String className) {
 		try {
