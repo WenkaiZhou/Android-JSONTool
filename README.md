@@ -1,5 +1,13 @@
 # Android-JSONTool
 
+## Using JSONTool in your application
+
+If you are building with Gradle, simply add the following line to the `dependencies` section of your `build.gradle` file:
+
+```
+	compile 'com.kevin:jsontool:1.0.0'
+```
+
 ## How to use ##
 
 **JSON createBean Example**
